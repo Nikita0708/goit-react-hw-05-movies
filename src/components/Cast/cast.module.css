@@ -1,0 +1,12 @@
+.poster {
+  width: 200px;
+}
+.list {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  list-style: none;
+}
+.item {
+  width: 200px;
+}

@@ -1,0 +1,30 @@
+.poster {
+  width: 300px;
+}
+.details {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+.details_link {
+  padding-bottom: 20px;
+  display: block;
+  text-decoration: none;
+  color: black;
+  transition: color 0.2s;
+}
+.details_link:hover {
+  color: orange;
+}
+
+.details_wrap {
+  width: 700px;
+}
+.bottom_wrap {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.link_wrap {
+  display: flex;
+  gap: 20px;
+}

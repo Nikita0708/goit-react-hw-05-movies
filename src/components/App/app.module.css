@@ -1,0 +1,14 @@
+.header {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.nav_link {
+  text-decoration: none;
+  color: black;
+  transition: color 0.2s;
+}
+.nav_link:hover {
+  color: orange;
+}

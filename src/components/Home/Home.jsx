@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { fetchTrending } from 'components/API/Api';
-import { Link } from 'react-router-dom';
-import s from './home.module.css';
-
-export const Home = () => {
+import { MovieList } from 'components/MovieList/MovieList';
+import { useLocation } from 'react-router-dom';
+const Home = () => {
   const [movies, setMovies] = useState([]);
-
+  const location = useLocation();
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -18,18 +17,6 @@ export const Home = () => {
     fetchMovies();
   }, []);
 
-  return (
-    <ul className={s.list}>
-      {movies.map(({ id, poster_path, title }) => (
-        <Link to={`/movies/${id}`} className={s.item}>
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            alt={title}
-            className={s.poster}
-          />
-          <h3 className={s.title}>{title}</h3>
-        </Link>
-      ))}
-    </ul>
-  );
+  return <MovieList movies={movies} location={location} />;
 };
+export default Home;

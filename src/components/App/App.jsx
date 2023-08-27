@@ -1,28 +1,14 @@
-import { Home } from 'components/Home/Home';
-import { useEffect, useState } from 'react';
-import { MovieDetails } from 'components/MovieDetails/MovieDetails';
-import { fetchTrending } from 'components/API/Api';
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import { Movies } from 'components/SearchMovies/Movies';
-import { Cast } from 'components/Cast/Cast';
-import { Review } from 'components/Review/Review';
 import s from './app.module.css';
 
-export const App = () => {
-  const [movies, setMovies] = useState([]);
+const Home = lazy(() => import('../Home/Home'));
+const MovieDetails = lazy(() => import('../MovieDetails/MovieDetails'));
+const Movies = lazy(() => import('../SearchMovies/Movies'));
+const Cast = lazy(() => import('../Cast/Cast'));
+const Reviews = lazy(() => import('../Review/Review'));
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const movies = await fetchTrending();
-        setMovies(movies);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchMovies();
-  }, []);
-
+const App = () => {
   return (
     <>
       <header className={s.header}>
@@ -33,22 +19,21 @@ export const App = () => {
           Search Movies
         </Link>
       </header>
-
-      <Routes>
-        <Route path="*" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
-
-        {movies.map(({ id }) => (
+      <Suspense fallback="Loading...">
+        <Routes>
+          <Route path="*" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
           <Route
-            path={`/movies/${id}`}
-            element={<MovieDetails id={id} path={'/movies'} />}
+            path={`/movies/:movieId`}
+            element={<MovieDetails path={'/movies'} />}
           >
-            <Route path="cast" element={<Cast id={id} />} />
-            <Route path="review" element={<Review id={id} />} />
+            <Route path="cast" element={<Cast />} />
+            <Route path="review" element={<Reviews />} />
           </Route>
-        ))}
-      </Routes>
+        </Routes>
+      </Suspense>
     </>
   );
 };
+export default App;
